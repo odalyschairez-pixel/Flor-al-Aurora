@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floréal Aurora</title>
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background-color: #faf9f6;
+      color: #2c2c2c;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #f4f3ef;
+      border-bottom: 3px solid #d4af37;
+      text-align: center;
+      padding: 80px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-size: 4em;
+      color: #3b3b3b;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.3em;
+      color: #6b6b6b;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    nav {
+      background-color: #fff;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+      text-align: center;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      color: #a77b06;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 25px;
+      font-size: 1.15em;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #d4af37;
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 70px 10%;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2.4em;
+      color: #a77b06;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #e0c97f;
+      display: inline-block;
+      padding-bottom: 8px;
+    }
+
+    p {
+      font-size: 1.1em;
+      line-height: 1.7em;
+      color: #555;
+      max-width: 850px;
+      margin: 0 auto 40px;
+    }
+
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .galeria img {
+      width: 270px;
+      height: 270px;
+      object-fit: cover;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.5s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .galeria img:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.3);
+    }
+
+    .recomendacion {
+      background-color: #fffdf6;
+      border-left: 5px solid #c4a13f;
+      padding: 25px;
+      border-radius: 12px;
+      margin: 50px auto;
+      width: 80%;
+      font-style: italic;
+      color: #5a5a5a;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    footer {
+      background-color: #2f2f2f;
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px;
+      border-top: 4px solid #d4af37;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    footer p {
+      font-size: 1em;
+      color: #e9e9e9;
+    }
+
+    .redes a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #d4af37;
+      font-size: 1.3em;
+      transition: color 0.3s ease;
+    }
+
+    .redes a:hover {
+      color: #fff;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(3px);
+      text-align: center;
+    }
+
+    .lightbox img {
+      margin: auto;
+      max-width: 85%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
+      animation: zoomIn 0.5s;
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.7); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    .close {
+      position: absolute;
+      top: 25px;
+      right: 45px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close:hover {
+      color: #d4af37;
+    }
+
+    /* Popup ecológico */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 2px solid #d4af37;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.25);
+      z-index: 10;
+      text-align: center;
+      width: 80%;
+      max-width: 420px;
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translate(-50%, -60%);}
+      to {opacity: 1; transform: translate(-50%, -50%);}
+    }
+
+    .popup button {
+      background-color: #d4af37;
+      color: #fff;
+      border: none;
+      padding: 10px 25px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .popup button:hover {
+      background-color: #b8921a;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Floréal Aurora</h1>
+    <p>La elegancia natural en su máxima expresión</p>
+  </header>
+
+  <nav>
+    <a href="#coleccion">Colección</a>
+    <a href="#sostenibilidad">Sostenibilidad</a>
+    <a href="#reseñas">Opiniones</a>
+    <a href="#galeria">Galería</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section id="coleccion">
+    <h2>Colección Floral</h2>
+    <p>Cada arreglo de Floréal Aurora es una composición que celebra la armonía entre color, textura y fragancia. Diseñamos piezas que evocan calma, belleza y equilibrio.</p>
+    <div class="galeria">
+      <img src="floral1.jpg" alt="Ramo elegante 1">
+      <img src="floral2.jpg" alt="Ramo elegante 2">
+      <img src="floral3.jpg" alt="Ramo elegante 3">
+      <img src="floral4.jpg" alt="Ramo elegante 4">
+
+    </div>
+  </section>
+
+  <section id="sostenibilidad">
+    <h2>Sostenibilidad</h2>
+    <p>En Floréal Aurora cultivamos belleza con conciencia. Usamos flores locales, empaques reciclables y procesos respetuosos con el medio ambiente.</p>
+    <div class="recomendacion">
+      🌿 Consejo: Reutiliza tus envases florales para nuevos arreglos o como decoración ecológica en tu hogar.
+    </div>
+  </section>
+
+  <section id="reseñas">
+    <h2>Opiniones</h2>
+    <p>“Una experiencia floral exquisita. Cada detalle transmite dedicación.” – <strong>Mariana S.</strong></p>
+    <p>“Elegancia y frescura. Floréal Aurora transformó mi evento en un jardín de ensueño.” – <strong>Lucía R.</strong></p>
+  </section>
+
+  <section id="galeria">
+    <h2>Galería Floral</h2>
+    <div class="galeria">
+      <img src="evento1.jpg" alt="Decoración 1">
+      <img src="evento2.jpg" alt="Decoración 2">
+      <img src="evento3.jpg" alt="Decoración 3">
+      <img src="evento4.jpg" alt="Decoración 4">
+      <img src="evento5.jpg" alt="Decoración 5">
+         <img src="evento6.jpg" alt="Decoración 6">
+	   <img src="evento7.jpg" alt="Decoración 7">
+	   <img src="evento8.jpg" alt="Decoración 8">
+	   <img src="evento9.jpg" alt="Decoración 9">
+	   <img src="evento10.jpg" alt="Decoración 10">
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2>Contáctanos</h2>
+    <p>📍 Tijuana, Baja California</p>
+    <p>💬 WhatsApp: <a href="https://wa.me/5216640000000" target="_blank">+52 1 664 000 0000</a></p>
+    <div class="redes">
+      <a href="https://www.instagram.com" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com" target="_blank">Facebook</a>
+      <a href="https://wa.me/5216640000000" target="_blank">WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Floréal Aurora · Elegancia y conciencia natural</p>
+  </footer>
+
+  <!-- Popup ecológico -->
+  <div class="popup" id="popup">
+    <h3>🌸 Consejo Floréal Aurora</h3>
+    <p>Seca tus flores favoritas y conviértelas en un hermoso cuadro o marca páginas. Cada pétalo cuenta una historia.</p>
+    <button onclick="cerrarPopup()">Cerrar</button>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <span class="close" onclick="cerrarLightbox()">&times;</span>
+    <img id="imagenAmpliada" src="" alt="Imagen ampliada">
+  </div>
+
+  <script>
+    // Popup ecológico
+    window.onload = function() {
+      setTimeout(function() {
+        document.getElementById('popup').style.display = 'block';
+      }, 4000);
+    }
+
+    function cerrarPopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const imagenAmpliada = document.getElementById('imagenAmpliada');
+    const imagenes = document.querySelectorAll('.galeria img');
+
+    imagenes.forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.style.display = 'block';
+        imagenAmpliada.src = img.src;
+      });
+    });
+
+    function cerrarLightbox() {
+      lightbox.style.display = 'none';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        cerrarLightbox();
+      }
+    });
+  </script>
+
+</body>
+</html>
